@@ -20,7 +20,7 @@ function getCollegeFile(college_name) {
     return readTextFile("./colleges/" + college_name + ".txt")
 }
 
-colleges = ["carnegie_mellon", "colby", "colgate", "cornell", "dartmouth", "georgetown", "grinell", "harvard", "haverford", "holy_cross", "macalester", "middlebury", "mit", "mount_holyoke", "pomona", "santa_clara", "university_of_california", "university_of_chicago", "university_of_michigan", "university_of_pennsylvania"]
+colleges = ["carnegie_mellon", "colby", "colgate", "cornell", "dartmouth", "georgetown", "grinell", "harvard", "haverford", "holy_cross", "macalester", "middlebury", "mit", "mount_holyoke", "pomona", "santa_clara", "university_of_california_davis", "university_of_chicago", "university_of_michigan", "university_of_pennsylvania"]
 
 function collegeA() {
     texts = colleges.map(getCollegeFile)
