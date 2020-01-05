@@ -1,44 +1,7 @@
-var collegeQuotes = [];
-
-async function getCollegeFile(college) {
-	collegeFileName = college["file_name"];
-	console.log(collegeFileName);
-	console.log(example_json[collegeFileName])
-	fetch("./colleges/" + collegeFileName + ".txt")
-	.then((response) => {
-		return response.text();
-	}).then((text) => {
-		collegeQuotes.push(
-		{
-			"name": college["name"],
-			"quotes": splitQuotes(text)
-		});
-	}).catch((error) => {
-		collegeQuotes.push(
-		{
-			"name": college["name"],
-			"quotes": [college["name"]]
-		});
-	});
-}
-
-function randElement(array) {
-	return array[Math.floor(Math.random()*array.length)];
-}
-
-function numRandElements(array, numRand) {
-	retArr = [];
-	for(let i = 0; i < numRand; i++) {
-		retArr.push(randElement(array));
-	}
-	return retArr;
-}
-
-function splitQuotes(quotes) {
-	return quotes.split("\n\n");
-}
-
-colleges = [
+let collegeQuotes = [];
+let correctCollege = "";
+let fourRandomColleges = [];
+let colleges = [
 	{
 		"name": "Carnegie Mellon University",
 		"file_name": "carnegie_mellon"
@@ -117,24 +80,96 @@ colleges = [
 	}
 ];
 
-
-
-function collegeA() {
-	collegeQuotes = [];
-	colleges.forEach(getCollegeFile);
-	console.log(collegeQuotes);
+async function getCollegeFile(college) {
+	collegeFileName = college["file_name"];
+	fetch("./colleges/" + collegeFileName + ".txt")
+	.then((response) => {
+		return response.text();
+	}).then((text) => {
+		collegeQuotes.push(
+		{
+			"name": college["name"],
+			"quotes": splitQuotes(text)
+		});
+	}).catch((error) => {
+		collegeQuotes.push(
+		{
+			"name": college["name"],
+			"quotes": [college["name"]]
+		});
+	});
 }
 
-function collegeB() {
+function randElement(array) {
+	return array[Math.floor(Math.random()*array.length)];
+}
+
+function numUniqueRandElements(array, numRand) {
+	retArr = [];
+	while(retArr.length < numRand) {
+		randElem = randElement(array);
+		console.log(randElem)
+        	if(!retArr.some(elem => (elem["name"] === randElem["name"]))) {
+		        retArr.push(randElem);
+        	}
+	}
+	return retArr;
+}
+
+function splitQuotes(quotes) {
+	return quotes.split("\n\n");
+}
+
+//Taken from https://stackoverflow.com/a/15618028
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition':'transitionend',
+      'OTransition':'oTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( el.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
+
+function collegeChoice(num) {
+	if(correctCollege == "") {
+		colleges.forEach(getCollegeFile); //initialize college quotes list
+	} else {
+		chosenCollege = fourRandomColleges[num]["name"];
+		console.log(chosenCollege + ": :" + correctCollege["name"]);
+		if(chosenCollege == correctCollege["name"]) {
+			document.getElementById("college" + num)["style"]["background-color"] = "green";
+		}else {
+			document.getElementById("college" + num)["style"]["background-color"] = "red";
+		}
+	}
+	displayCollegeQuote();
+}
+
+function collegeFileTesting() {
 	for(let i = 0; i < 20; i++) {
 		console.log(randElement(collegeQuotes));
 	}
 }
 
-function collegeC() {
-	fourRandomColleges = numRandElements(collegeQuotes,4);
+function displayCollegeQuote() {
+	//reset background color of buttons
+	buttons = document.getElementsByTagName("button");
+	for (let i of buttons) {
+		i["style"]["background-color"] = "gray";
+	}
+	fourRandomColleges = numUniqueRandElements(collegeQuotes,4);
+	console.log(fourRandomColleges);
 	correctCollege = randElement(fourRandomColleges);
-	collegeQuote = randElement(correctCollege["quotes"]);
+	console.log(correctCollege);
+	let collegeQuote = randElement(correctCollege["quotes"]);
 	document.getElementById("quote").innerHTML = collegeQuote;
 	for(let i = 0; i < 4; i++) {
 		document.getElementById("college" + i).innerHTML = fourRandomColleges[i]["name"];

@@ -28,12 +28,9 @@ button {
 	font-size: x-large;
 	font-family: 'Merriweather', serif;
 	background-color: gray;
-	border-radius: 1em;
+	border-radius: 0.5em;
 	border: none;
   	color: white;
-	/* Transition Timings */
-	-webkit-transition-duration: 0.4s; /* Safari Compatability */
-  	transition-duration: 0.4s;
 }
 
 button:hover {
