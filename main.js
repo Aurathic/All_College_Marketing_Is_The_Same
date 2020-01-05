@@ -2,7 +2,7 @@
 function readTextFile(file)
 {
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
+    rawFile.open("GET", file);
     rawFile.onreadystatechange = function ()
     {
         if(rawFile.readyState === 4)
@@ -16,10 +16,13 @@ function readTextFile(file)
     rawFile.send(null);
 }
 
+function getCollegeFile(college_name) {
+    return readTextFile("./colleges/" + college_name + ".txt")
+}
+
 colleges = ["carnegie_mellon", "colby", "colgate", "cornell", "dartmouth", "georgetown", "grinell", "harvard", "haverford", "holy_cross", "macalester", "middlebury", "mit", "mount_holyoke", "pomona", "santa_clara", "university_of_california", "university_of_chicago", "university_of_michigan", "university_of_pennsylvania"]
 
-texts = colleges.map(readTextFile)
-console.log(texts);
-
 function collegeA() {
+    texts = colleges.map(getCollegeFile)
+    console.log(texts);
 }
