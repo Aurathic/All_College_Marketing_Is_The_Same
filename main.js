@@ -1,7 +1,7 @@
 //Adapted from https://stackoverflow.com/questions/14446447/how-to-read-a-local-text-file
 function readTextFile(file)
 {
-    var rawFile = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
 	xhr.responseType = 'text';
 
 	xhr.onload = function () {
@@ -12,6 +12,8 @@ function readTextFile(file)
    	     }
  	   }
 	};
+	xhr.open("GET", file);
+	xhr.send(null);
 }
 
 function getCollegeFile(college_name) {
