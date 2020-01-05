@@ -2,18 +2,16 @@
 function readTextFile(file)
 {
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                return rawFile.responseText;;
-            }
-        }
-    }
-    rawFile.send(null);
+	xhr.responseType = 'text';
+
+	xhr.onload = function () {
+  	  if (xhr.readyState === xhr.DONE) {
+    	    if (xhr.status === 200) {
+     	       console.log(xhr.response);
+     	       return xhr.responseText;
+   	     }
+ 	   }
+	};
 }
 
 function getCollegeFile(college_name) {
