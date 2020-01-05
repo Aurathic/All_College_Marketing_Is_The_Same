@@ -14,9 +14,10 @@ Cornell_B",
 "Pomona_A"];
 
 async function getCollegeFile(college_name) {
-     file = await fetch("./colleges/" + college_name + ".txt");
-     console.log(file);
-     return file.text;
+	resp = await fetch("./colleges/" + college_name + ".txt");
+	file = await file.text()
+	console.log(file);
+	return file;
 }
 
 function splitQuotes(quotes) {
