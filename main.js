@@ -1,24 +1,37 @@
-college_quotes = [];
+var collegeQuotes = [];
 
 async function getCollegeFile(college) {
-	college_file_name = college["file_name"];
-	fetch("./colleges/" + college_file_name + ".txt")
+	collegeFileName = college["file_name"];
+	console.log(collegeFileName);
+	console.log(example_json[collegeFileName])
+	fetch("./colleges/" + collegeFileName + ".txt")
 	.then((response) => {
 		return response.text();
 	}).then((text) => {
-		college_quotes.push(
+		collegeQuotes.push(
 		{
 			"name": college["name"],
 			"quotes": splitQuotes(text)
 		});
 	}).catch((error) => {
-		console.log(example_json[college_file_name])
-		college_quotes.push(
+		collegeQuotes.push(
 		{
 			"name": college["name"],
-			"quotes": college["name"]
+			"quotes": [college["name"]]
 		});
 	});
+}
+
+function randElement(array) {
+	return array[Math.floor(Math.random()*array.length)];
+}
+
+function numRandElements(array, numRand) {
+	retArr = [];
+	for(let i = 0; i < numRand; i++) {
+		retArr.push(randElement(array));
+	}
+	return retArr;
 }
 
 function splitQuotes(quotes) {
@@ -104,18 +117,26 @@ colleges = [
 	}
 ];
 
-function collegeA() {
-	college_quotes = [];
-	colleges.forEach(getCollegeFile);
-	console.log(college_quotes);
-}
 
-function randElement(array) {
-	return array[Math.floor(Math.random()*array.length)];
+
+function collegeA() {
+	collegeQuotes = [];
+	colleges.forEach(getCollegeFile);
+	console.log(collegeQuotes);
 }
 
 function collegeB() {
 	for(let i = 0; i < 20; i++) {
-		console.log(randElement(college_quotes));
+		console.log(randElement(collegeQuotes));
+	}
+}
+
+function collegeC() {
+	fourRandomColleges = numRandElements(collegeQuotes,4);
+	correctCollege = randElement(fourRandomColleges);
+	collegeQuote = randElement(correctCollege["quotes"]);
+	document.getElementById("quote").innerHTML = collegeQuote;
+	for(let i = 0; i < 4; i++) {
+		document.getElementById("college" + i).innerHTML = fourRandomColleges[i]["name"];
 	}
 }
