@@ -1,8 +1,21 @@
-function collegeA() {
-var req = new XMLHttpRequest();
-req.onload = function() {
-  console.log(this.responseXML);
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
 }
-req.open('GET', './colleges/harvard.txt');
-req.send();
+
+function collegeA() {
+	readTextFile("./colleges/harvard.txt");
 }
