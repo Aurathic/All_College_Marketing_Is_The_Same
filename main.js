@@ -123,28 +123,32 @@ function splitQuotes(quotes) {
 	return quotes.split("\n\n");
 }
 
+//add trigger on animation end that removes correct/incorrect labels
+//and displays another quote. 
 for (let button of document.getElementsByTagName("button")) {
 	button.onanimationend = function(e) {
 		console.log("animation end!");
 		button.classList.remove("correct");
 		button.classList.remove("incorrect");
+		displayCollegeQuote();
 	};
 }
 
-function collegeChoice(num) {
+function collegeChoice(collegeName) {
 	if(correctCollege == "") {
 		colleges.forEach(getCollegeFile); //initialize college quotes list
 	} else {
-		chosenCollege = fourRandomColleges[num]["name"];
-		console.log(chosenCollege + ": :" + correctCollege["name"]);
-		college = document.getElementById("college" + num);
-		if(chosenCollege == correctCollege["name"]) {
-			college.classList.add("correct");
+		console.log(collegeName + ": :" + correctCollege["name"]);
+		collegeButton = document.querySelector("button[value=\"" + collegeName + "\"]");
+		correctCollegeButton = document.querySelectorAll("input[value=\"" + correctCollege["name"] + "\"]");
+		if(collegeName == correctCollege["name"]) {
+			collegeButton.classList.add("correct");
 		} else {
-			college.classList.add("incorrect");
+			collegeButton.classList.add("incorrect");
+			correctCollegeButton.classList.add("correct");
 		}
 	}
-	displayCollegeQuote();
+	
 }
 
 function displayCollegeQuote() {
@@ -156,7 +160,9 @@ function displayCollegeQuote() {
 	let collegeQuote = randElement(correctCollege["quotes"]);
 	console.log(collegeQuote);
 	document.getElementById("quote").innerHTML = collegeQuote;
-	for(let i = 0; i < 4; i++) {
-		document.getElementById("college" + i).innerHTML = fourRandomColleges[i]["name"];
+    buttons = document.getElementsByTagName("button");
+	for(let i = 0; i < buttons.length; i++) {
+		buttons[i].innerHTML = fourRandomColleges[i]["name"];
+		buttons[i].value = fourRandomColleges[i]["name"];
 	}
 }
