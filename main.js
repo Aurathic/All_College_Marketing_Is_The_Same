@@ -137,6 +137,7 @@ for (let button of document.getElementsByTagName("button")) {
 function collegeChoice(collegeName) {
 	if(correctCollege == "") {
 		colleges.forEach(getCollegeFile); //initialize college quotes list
+		displayCollegeQuote();
 	} else {
 		console.log(collegeName + ": :" + correctCollege["name"]);
 		collegeButton = document.querySelector("button[value=\"" + collegeName + "\"]");
@@ -155,11 +156,11 @@ function displayCollegeQuote() {
 	//reset background color of buttons
 	buttons = document.getElementsByTagName("button");
 	fourRandomColleges = numUniqueRandElements(collegeQuotes,4);
-	correctCollegeIndex = randElementIndex(fourRandomColleges);
-	correctCollege = fourRandomColleges[correctCollegeIndex];
+	correctCollege = randElement(fourRandomColleges);
 	let collegeQuote = randElement(correctCollege["quotes"]);
 	console.log(collegeQuote);
 	document.getElementById("quote").innerHTML = collegeQuote;
+	//Display college names on buttons
     buttons = document.getElementsByTagName("button");
 	for(let i = 0; i < buttons.length; i++) {
 		buttons[i].innerHTML = fourRandomColleges[i]["name"];
