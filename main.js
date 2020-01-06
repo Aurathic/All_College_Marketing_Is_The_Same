@@ -101,7 +101,11 @@ async function getCollegeFile(college) {
 }
 
 function randElement(array) {
-	return array[Math.floor(Math.random()*array.length)];
+	return array[randElementIndex(array)];
+}
+
+function randElementIndex(array) {
+	return Math.floor(Math.random()*array.length);
 }
 
 function numUniqueRandElements(array, numRand) {
@@ -119,29 +123,12 @@ function splitQuotes(quotes) {
 	return quotes.split("\n\n");
 }
 
-//Taken from https://stackoverflow.com/a/15618028
-function whichTransitionEvent(){
-    var t;
-    var el = document.createElement('fakeelement');
-    var transitions = {
-      'transition':'transitionend',
-      'OTransition':'oTransitionEnd',
-      'MozTransition':'transitionend',
-      'WebkitTransition':'webkitTransitionEnd'
-    }
-
-    for(t in transitions){
-        if( el.style[t] !== undefined ){
-            return transitions[t];
-        }
-    }
-}
-
 for (let button of document.getElementsByTagName("button")) {
-	button.addEventListener("transitionend", function(e) {
+	button.onanimationend = function(e) {
+		console.log("animation end!");
 		button.classList.remove("correct");
 		button.classList.remove("incorrect");
-	});
+	};
 }
 
 function collegeChoice(num) {
@@ -163,12 +150,11 @@ function collegeChoice(num) {
 function displayCollegeQuote() {
 	//reset background color of buttons
 	buttons = document.getElementsByTagName("button");
-	for (let i of buttons) {
-		i["style"]["background-color"] = "gray";
-	}
 	fourRandomColleges = numUniqueRandElements(collegeQuotes,4);
-	correctCollege = randElement(fourRandomColleges);
+	correctCollegeIndex = randElementIndex(fourRandomColleges);
+	correctCollege = fourRandomColleges[correctCollegeIndex];
 	let collegeQuote = randElement(correctCollege["quotes"]);
+	console.log(collegeQuote);
 	document.getElementById("quote").innerHTML = collegeQuote;
 	for(let i = 0; i < 4; i++) {
 		document.getElementById("college" + i).innerHTML = fourRandomColleges[i]["name"];
