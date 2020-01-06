@@ -36,18 +36,29 @@ button {
 }
 
 button:hover {
-  	background-color: #AAAAAA;
-  	color: #333333;
+  	filter: brightness(150%);
 }
 
 .correct {
-	background-color: green !important;
+	animation: correctanim linear 2s;
 }
 
 .incorrect {
-	background-color: red !important;
+	animation: incorrectanim linear 2s;
 }
 
 .invisible {
 	opacity: 0;
+}
+
+@keyframes correctanim {
+	0% {background-color: gray;}
+	50% {background-color: green;} 
+	100% {background-color: gray;}
+}
+
+@keyframes incorrectanim {
+	0% {background-color: gray;}
+	50% {background-color: red;} 
+	100% {background-color: gray;}
 }
