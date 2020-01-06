@@ -5,16 +5,17 @@ body {
 	margin-top: 5%;
 }
 
-blockquote {
-	font-size: x-large;
-}
-
-div {
+.quotemark {
 	font-size: xx-large;
 }
 
-div.rightquote {
+#rightquote {
 	text-align: right;
+}
+
+#quote {
+	margin-left: 10%;
+	margin-right: 10%;
 }
 
 div.buttons {
@@ -31,9 +32,22 @@ button {
 	border-radius: 0.5em;
 	border: none;
   	color: white;
+  	transition: color 0.3s;
 }
 
 button:hover {
   	background-color: #AAAAAA;
   	color: #333333;
+}
+
+.correct {
+	background-color: green !important;
+}
+
+.incorrect {
+	background-color: red !important;
+}
+
+.invisible {
+	opacity: 0;
 }

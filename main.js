@@ -108,10 +108,9 @@ function numUniqueRandElements(array, numRand) {
 	retArr = [];
 	while(retArr.length < numRand) {
 		randElem = randElement(array);
-		console.log(randElem)
-        	if(!retArr.some(elem => (elem["name"] === randElem["name"]))) {
-		        retArr.push(randElem);
-        	}
+        if(!retArr.some(elem => (elem["name"] === randElem["name"]))) {
+            retArr.push(randElem);
+        }
 	}
 	return retArr;
 }
@@ -138,25 +137,27 @@ function whichTransitionEvent(){
     }
 }
 
+for (let button of document.getElementsByTagName("button")) {
+	button.addEventListener("transitionend", function(e) {
+		button.classList.remove("correct");
+		button.classList.remove("incorrect");
+	});
+}
+
 function collegeChoice(num) {
 	if(correctCollege == "") {
 		colleges.forEach(getCollegeFile); //initialize college quotes list
 	} else {
 		chosenCollege = fourRandomColleges[num]["name"];
 		console.log(chosenCollege + ": :" + correctCollege["name"]);
+		college = document.getElementById("college" + num);
 		if(chosenCollege == correctCollege["name"]) {
-			document.getElementById("college" + num)["style"]["background-color"] = "green";
-		}else {
-			document.getElementById("college" + num)["style"]["background-color"] = "red";
+			college.classList.add("correct");
+		} else {
+			college.classList.add("incorrect");
 		}
 	}
 	displayCollegeQuote();
-}
-
-function collegeFileTesting() {
-	for(let i = 0; i < 20; i++) {
-		console.log(randElement(collegeQuotes));
-	}
 }
 
 function displayCollegeQuote() {
@@ -166,9 +167,7 @@ function displayCollegeQuote() {
 		i["style"]["background-color"] = "gray";
 	}
 	fourRandomColleges = numUniqueRandElements(collegeQuotes,4);
-	console.log(fourRandomColleges);
 	correctCollege = randElement(fourRandomColleges);
-	console.log(correctCollege);
 	let collegeQuote = randElement(correctCollege["quotes"]);
 	document.getElementById("quote").innerHTML = collegeQuote;
 	for(let i = 0; i < 4; i++) {
